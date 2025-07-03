@@ -1,0 +1,15 @@
+<mat-card>
+    <h2>Login</h2>
+    <form (ngSubmit)="onLogin()" [formGroup]="loginForm">
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" type="email" required>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid || loading">
+            Login
+        </button>
+        <div *ngIf="error" class="error">{{ error }}</div>
+    </form>
+    <a routerLink="/register">Noch keinen Account? Jetzt registrieren</a>
+</mat-card>
