@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, User } from '@angular/fire/auth';
+import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, User, updateProfile } from '@angular/fire/auth';
 import { user, authState } from "@angular/fire/auth";
 import { Observable } from "rxjs";
 
@@ -25,5 +25,10 @@ export class AuthService {
 
   getUser(): Observable<User | null> {
     return authState(this.auth);
+  }
+
+  updateDisplayName(name: string) {
+    const user = this.auth.currentUser;
+    return user ? updateProfile(user, { displayName: name }) : Promise.reject('No user logged in');
   }
 }

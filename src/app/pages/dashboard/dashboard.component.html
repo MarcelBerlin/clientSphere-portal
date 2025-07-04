@@ -1,1 +1,22 @@
-<p>dashboard works!</p>
+<div class="dashboard-container">
+    <ng-container *ngIf="user$ | async as user">
+        <h1>Welcome, {{ user.email || 'User' }}!</h1>
+    </ng-container>
+    <div class="card-grid">
+        <mat-card class="card">
+            <mat-card-title>My Profile</mat-card-title>
+            <mat-card-content>View and edit your personal information.</mat-card-content>
+            <button mat-button color="primary" routerLink="/profile">Go to Profile</button>
+        </mat-card>
+        <mat-card class="card">
+            <mat-card-title>Support Tickets</mat-card-title>
+            <mat-card-content>Open new tickets or track existing ones.</mat-card-content>
+            <button mat-button color="primary" routerLink="/tickets">Go to Tickets</button>
+        </mat-card>
+        <mat-card class="card">
+            <mat-card-title>Upload Documents</mat-card-title>
+            <mat-card-content>Upload files like proofs or contracts.</mat-card-content>
+            <button mat-button color="primary" routerLink="/upload">Go to Upload</button>
+        </mat-card>
+    </div>
+</div>

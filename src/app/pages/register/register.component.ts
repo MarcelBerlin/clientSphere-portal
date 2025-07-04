@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, ReactiveFormsModule, AbstractControl } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -16,7 +16,8 @@ import { MatInputModule } from '@angular/material/input';
     MatCardModule,
     MatFormFieldModule,
     MatButtonModule,
-    MatInputModule
+    MatInputModule,
+    RouterModule
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
@@ -34,7 +35,7 @@ export class RegisterComponent {
     }, { validators: this.passwordMatchValidator });
   }
 
- 
+
   passwordMatchValidator(form: AbstractControl) {
     const password = form.get('password')?.value;
     const passwordRepeat = form.get('passwordRepeat')?.value;
@@ -55,8 +56,33 @@ export class RegisterComponent {
       await this.auth.register(email!, password!);
       this.router.navigate(['/dashboard']);
     } catch (e: any) {
-      this.error = e.message || 'Registrierung fehlgeschlagen';
+      switch (e.code) {
+        case 'auth/email-already-in-use':
+          this.error = 'Diese E-Mail wird bereits verwendet.';
+          break;
+        case 'auth/invalid-email':
+          this.error = 'Bitte gib eine gültige E-Mail-Adresse ein.';
+          break;
+        case 'auth/weak-password':
+          this.error = 'Das Passwort ist zu kurz (mindestens 6 Zeichen).';
+          break;
+        case 'auth/operation-not-allowed':
+          this.error = 'Registrierung momentan nicht verfügbar.';
+          break;
+        case 'auth/too-many-requests':
+          this.error = 'Zu viele Versuche. Bitte warte kurz und versuche es erneut.';
+          break;
+        case 'auth/network-request-failed':
+          this.error = 'Netzwerkfehler. Bitte prüfe deine Internetverbindung.';
+          break;
+        case 'auth/quota-exceeded':
+          this.error = 'Registrierung momentan nicht möglich, bitte später erneut versuchen.';
+          break;
+        default:
+          this.error = 'Ein unbekannter Fehler ist aufgetreten. Bitte erneut versuchen.';
+      }
     }
+
     this.loading = false;
   }
 

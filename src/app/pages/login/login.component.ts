@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldControl, MatFormFieldModule } from '@angular/material/form-field';
@@ -18,7 +18,8 @@ import { MatInputModule } from '@angular/material/input';
     MatCardModule,
     MatButtonModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    RouterModule
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
@@ -44,9 +45,24 @@ export class LoginComponent {
       await this.auth.login(email!, password!);
       this.router.navigate(['/dashboard']);
     } catch (e: any) {
-      this.error = e.message || 'Login fehlgeschlagen';
+      // e.code enthält z. B. 'auth/invalid-credential', 'auth/user-not-found', etc.
+      switch (e.code) {
+        case 'auth/invalid-credential':
+        case 'auth/wrong-password':
+          this.error = 'E-Mail oder Passwort ist falsch.';
+          break;
+        case 'auth/user-not-found':
+          this.error = 'Kein Konto gefunden. Bitte registrieren.';
+          break;
+        case 'auth/too-many-requests':
+          this.error = 'Zu viele Fehlversuche. Bitte später erneut versuchen.';
+          break;
+        default:
+          this.error = 'Login fehlgeschlagen. Bitte versuche es erneut.';
+      }
     }
     this.loading = false;
   }
+
 
 }

@@ -15,7 +15,21 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/dashboard/dashboard.component').then(m => m.DashboardComponent),
         canActivate: [authGuard]
     },
-
+    {
+        path: 'profile',
+        loadComponent: () => import('./pages/profile/profile.component').then(m => m.ProfileComponent),
+        canActivate: [authGuard]
+    },
+    {
+        path: 'tickets',
+        loadComponent: () => import('./pages/tickets/tickets.component').then(m => m.TicketsComponent),
+        canActivate: [authGuard]
+    },
+    {
+        path: 'upload',
+        loadComponent: () => import('./pages/upload/upload.component').then(m => m.UploadComponent),
+        canActivate: [authGuard]
+    },
     {
         path: '', redirectTo: '/dashboard', pathMatch: 'full'
     }
