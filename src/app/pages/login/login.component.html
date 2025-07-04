@@ -1,4 +1,6 @@
+
 <mat-card>
+    <img src="ClientSphere_top.png" alt="ClientSphere Logo">
     <h2>Login</h2>
     <form (ngSubmit)="onLogin()" [formGroup]="loginForm">
         <mat-form-field appearance="outline" class="w-100">
@@ -16,5 +18,5 @@
         </button>
         <div *ngIf="error" class="error">{{ error }}</div>
     </form>
-    <a routerLink="/register">Noch keinen Account? Jetzt registrieren</a>
+    <a routerLink="/register">Noch keinen Account? - Jetzt registrieren</a>
 </mat-card>

@@ -1,22 +1,32 @@
 <div class="dashboard-container">
+    <header>
+        <img src="ClientSphere_top.png" style="width: 100px; height: 100px;" alt="ClientSphere Logo">
+        <div>
+            <h2>Profil und Ticketverwaltung</h2>
+        </div>
+    </header>
     <ng-container *ngIf="user$ | async as user">
-        <h1>Welcome, {{ user.email || 'User' }}!</h1>
+        <h1>Willkommen, {{ user.displayName ? user.displayName : user.email || 'User' }} !</h1>
     </ng-container>
     <div class="card-grid">
         <mat-card class="card">
-            <mat-card-title>My Profile</mat-card-title>
-            <mat-card-content>View and edit your personal information.</mat-card-content>
-            <button mat-button color="primary" routerLink="/profile">Go to Profile</button>
+            <mat-card-title>Mein Profil</mat-card-title>
+            <mat-card-content>Persönliche Informationen ansehen und bearbeiten.</mat-card-content>
+            <button mat-button color="primary" routerLink="/profile">Profil</button>
         </mat-card>
         <mat-card class="card">
-            <mat-card-title>Support Tickets</mat-card-title>
-            <mat-card-content>Open new tickets or track existing ones.</mat-card-content>
-            <button mat-button color="primary" routerLink="/tickets">Go to Tickets</button>
+            <mat-card-title>Tickets bearbeiten</mat-card-title>
+            <mat-card-content>Ein neues Ticket eröffnen oder bestehende suchen.</mat-card-content>
+            <button mat-button color="primary" routerLink="/tickets">Tickets</button>
         </mat-card>
         <mat-card class="card">
-            <mat-card-title>Upload Documents</mat-card-title>
-            <mat-card-content>Upload files like proofs or contracts.</mat-card-content>
-            <button mat-button color="primary" routerLink="/upload">Go to Upload</button>
+            <mat-card-title>Dokumente hochladen</mat-card-title>
+            <mat-card-content>Dateien, wie Beweise oder Verträge hochladen.</mat-card-content>
+            <button mat-button color="primary" routerLink="/upload">Hochladen</button>
         </mat-card>
+    </div>
+
+    <div class="logoutContainer">
+        <button mat-button color="primary" (click)="logoutUser()">Abmelden</button>
     </div>
 </div>

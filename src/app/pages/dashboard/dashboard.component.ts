@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { User } from 'firebase/auth';
@@ -22,10 +22,13 @@ export class DashboardComponent {
 
   user$: Observable<User | null>;
 
-  constructor(private auth: AuthService) {
+  constructor(private auth: AuthService, private router: Router) {
     this.user$ = this.auth.getUser();
   }
 
 
+  logoutUser() {
+    return this.auth.logout(), this.router.navigate(['/login']), console.log('logout erfolgreich');
+  }
 
 }

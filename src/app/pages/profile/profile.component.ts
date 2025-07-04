@@ -4,7 +4,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { RouterModule } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { MatCardModule } from '@angular/material/card';
 
@@ -29,7 +29,7 @@ export class ProfileComponent implements OnInit {
   error = '';
   success = '';
 
-  constructor(private fb: FormBuilder, private auth: AuthService) {
+  constructor(private fb: FormBuilder, private auth: AuthService, private router: Router) {
     this.profileForm = this.fb.group({
       displayName: ['', Validators.required]
     });
@@ -50,6 +50,7 @@ export class ProfileComponent implements OnInit {
       const { displayName } = this.profileForm.value;
       await this.auth.updateDisplayName(displayName);
       this.success = 'Profil erfolgreich aktualisiert!';
+      this.router.navigate(['/dashboard']);
     } catch (e: any) {
       this.error = e.message || 'Update fehlgeschlagen';
     }
