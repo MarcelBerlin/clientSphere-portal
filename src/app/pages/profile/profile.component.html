@@ -1,1 +1,15 @@
-<p>profile works!</p>
+<mat-card>
+    <h2>My Profile</h2>
+    <form (ngSubmit)="onSave()" [formGroup]="profileForm">
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Display Name</mat-label>
+            <input matInput formControlName="displayName" required>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit"
+            [disabled]="profileForm.invalid || loading">Save</button>
+
+        <div *ngIf="success" class="success">{{ success }}</div>
+        <div *ngIf="error" class="error">{{ error }}</div>
+    </form>
+</mat-card>

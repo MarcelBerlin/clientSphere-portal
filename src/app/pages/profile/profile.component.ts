@@ -6,12 +6,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-profile',
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    MatCardModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
