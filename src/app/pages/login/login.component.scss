@@ -1,11 +1,20 @@
 mat-card img {
     width: 300px;
     height: 300px;
+    margin-top: 2rem;
 }
 
 .mat-mdc-card {
     align-items: center;
 }
+
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
 
 header {
     background-color: rgba(0,0,0,0.2);
@@ -17,7 +26,14 @@ header {
     
     img {
         padding: 0.5rem;
+        
     }
+}
+
+.input-section {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 
 
