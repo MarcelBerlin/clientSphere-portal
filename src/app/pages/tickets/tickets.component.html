@@ -1,1 +1,38 @@
-<p>tickets works!</p>
+<div class="ticket-container">
+    <header>
+        <img src="ClientSphere_top.png" style="width: 100px; height: 100px;" alt="ClientSphere Logo">
+        <div>
+            <h2>Meine Tickets</h2>
+        </div>
+    </header>
+
+    <mat-card>
+        <h2>Support Tickets</h2>
+        <form (ngSubmit)="onCreate()" [formGroup]="newTicketForm">
+            <mat-form-field class="w-100">
+                <mat-label>Title</mat-label>
+                <input matInput formControlName="title" required>
+            </mat-form-field>
+
+            <mat-form-field class="w-100">
+                <mat-label>Description</mat-label>
+                <textarea matInput formControlName="description" required></textarea>
+            </mat-form-field>
+
+            <button mat-raised-button color="primary" type="submit" [disabled]="newTicketForm.invalid || loading">Create
+                Ticket</button>
+            <div *ngIf="error" class="error">{{ error }}</div>
+        </form>
+
+        <mat-list>
+            <mat-list-item *ngFor="let t of tickets$ | async">
+                <h3 matLine>{{ t.title }}</h3>
+                <p matLine>{{ t.description }}</p>
+                <p matLine>Status: {{ t.status }}</p>
+            </mat-list-item>
+        </mat-list>
+    </mat-card>
+
+
+
+</div>

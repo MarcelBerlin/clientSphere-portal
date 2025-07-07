@@ -1,15 +1,25 @@
-<mat-card>
-    <h2>My Profile</h2>
-    <form (ngSubmit)="onSave()" [formGroup]="profileForm">
-        <mat-form-field appearance="outline" class="w-100">
-            <mat-label>Display Name</mat-label>
-            <input matInput formControlName="displayName" required>
-        </mat-form-field>
+<div class="profile-container">
 
-        <button mat-raised-button color="primary" type="submit"
-            [disabled]="profileForm.invalid || loading">Save</button>
+    <header>
+        <img src="ClientSphere_top.png" style="width: 100px; height: 100px;" alt="ClientSphere Logo">
+        <div>
+            <h2>Mein Profil</h2>
+        </div>
+    </header>
 
-        <div *ngIf="success" class="success">{{ success }}</div>
-        <div *ngIf="error" class="error">{{ error }}</div>
-    </form>
-</mat-card>
+    <mat-card>
+        <h2>Nutzer Informationen</h2>
+        <form (ngSubmit)="onSave()" [formGroup]="profileForm">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Display Name</mat-label>
+                <input matInput formControlName="displayName" required>
+            </mat-form-field>
+
+            <button mat-raised-button color="primary" type="submit"
+                [disabled]="profileForm.invalid || loading">Save</button>
+
+            <div *ngIf="success" class="success">{{ success }}</div>
+            <div *ngIf="error" class="error">{{ error }}</div>
+        </form>
+    </mat-card>
+</div>
