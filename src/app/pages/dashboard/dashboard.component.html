@@ -6,7 +6,7 @@
         </div>
     </header>
     <ng-container *ngIf="user$ | async as user">
-        <h1>Willkommen, {{ user.displayName ? user.displayName : user.email || 'User' }} !</h1>
+        <h1>Willkommen, {{ user.displayName ? user.displayName : (user.isAnonymous ? 'Gast' : user.email) || 'User' }} !</h1>
     </ng-container>
     <div class="card-grid">
         <mat-card class="card">

@@ -14,9 +14,15 @@
                 <input matInput formControlName="password" type="password" required>
             </mat-form-field>
 
-            <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid || loading">
-                Login
-            </button>
+            <div class="btn-container">
+                <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid || loading">
+                    Login
+                </button>
+
+                <button mat-raised-button color="accent" type="button" (click)="onGuestLogin()">Continue as
+                    Guest</button>
+            </div>
+
         </div>
 
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, User, updateProfile } from '@angular/fire/auth';
+import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, User, updateProfile, signInAnonymously } from '@angular/fire/auth';
 import { user, authState } from "@angular/fire/auth";
 import { Observable } from "rxjs";
 
@@ -13,6 +13,10 @@ export class AuthService {
 
   login(email: string, password: string) {
     return signInWithEmailAndPassword(this.auth, email, password);
+  }
+
+  guestLogin() {
+    return signInAnonymously(this.auth);
   }
 
   register(email: string, password: string) {

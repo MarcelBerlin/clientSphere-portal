@@ -65,4 +65,15 @@ export class LoginComponent {
   }
 
 
+  async onGuestLogin() {
+    this.error = '';
+    this.loading = true;
+    try {
+      await this.auth.guestLogin();
+      this.router.navigate(['/dashboard']);
+    } catch (e: any) {
+      this.error = 'Gäste Login fehlgeschlagen. Bitte versuchen Sie es erneut.';
+    }
+    this.loading = false;
+  }
 }
