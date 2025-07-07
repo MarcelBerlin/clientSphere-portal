@@ -8,6 +8,11 @@ import { Observable } from 'rxjs'
 import { TicketService, Ticket } from '../../services/ticket.service';
 import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { Auth } from '@angular/fire/auth';
+import { Title } from '@angular/platform-browser';
+
+
 
 
 @Component({
@@ -18,6 +23,7 @@ import { CommonModule } from '@angular/common';
     MatButtonModule,
     RouterModule,
     MatInputModule,
+    MatIconModule,
     ReactiveFormsModule,
     CommonModule
   ],
@@ -28,14 +34,23 @@ export class TicketsComponent implements OnInit {
 
   tickets$!: Observable<Ticket[]>;
   newTicketForm: FormGroup;
+  editForm: FormGroup;
   loading = false;
   error = '';
+  currentUserId = '';
+  editTicketId: string | null = null;
 
-  constructor(private ticketService: TicketService, private fb: FormBuilder) {
+  constructor(private ticketService: TicketService, private fb: FormBuilder, private auth: Auth) {
     this.newTicketForm = this.fb.group({
       title: ['', [Validators.required]],
       description: ['', [Validators.required]]
     });
+
+    this.editForm = this.fb.group({
+      title: [''],
+      description: ['']
+    });
+    this.currentUserId = this.auth.currentUser?.uid || '';
   }
 
   ngOnInit(): void {
@@ -52,5 +67,24 @@ export class TicketsComponent implements OnInit {
       this.error = e.message;
     }
     this.loading = false;
+  }
+
+  onUpdate(id: string) {
+    if (this.editForm.invalid) return;
+
+    this.ticketService.updateTicket(id, this.editForm.value)
+      .then(() => {
+        this.editTicketId = null;
+      }).catch(err => {
+        this.error = err.message;
+      });
+  }
+
+  cancelEdit() {
+    this.editTicketId = null;
+  }
+
+  deleteTicket(id: string) {
+    return this.ticketService.deleteTicket(id);
   }
 }

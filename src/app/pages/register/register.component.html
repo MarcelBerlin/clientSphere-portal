@@ -4,17 +4,17 @@
     <form (ngSubmit)="onRegister()" [formGroup]="registerForm">
         <div class="inputContainer">
             <mat-form-field appearance="outline" class="w-100">
-                <mat-label>Email</mat-label>
+                <mat-label>E-mail</mat-label>
                 <input matInput formControlName="email" type="email" required>
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="w-100">
-                <mat-label>Password</mat-label>
+                <mat-label>Passwort</mat-label>
                 <input matInput formControlName="password" type="password" required>
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="w-100">
-                <mat-label>Repeat Password</mat-label>
+                <mat-label>Passwort wiederholen</mat-label>
                 <input matInput formControlName="passwordRepeat" type="password" required>
             </mat-form-field>
 
