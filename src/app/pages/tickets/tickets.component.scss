@@ -24,18 +24,32 @@ header {
     width: 100%;
 }
 
-.ticket-card {
-  margin-top: 16px;
+// .ticket-card {
+//   margin-top: 16px;
   
-  .ticket-icons {
-    display: flex;
-    justify-content: space-around;
-    gap: 16px;
-  }
-}
+//   .ticket-icons {
+//     display: flex;
+//     justify-content: space-around;
+//     gap: 16px;
+//   }
+// }
 
 .status-del {
     display: flex;
     justify-content: space-between;
+}
+
+.ticket-card {
+  margin-top: 16px;
+
+  mat-card {
+    padding: 12px;
+  }
+
+  .edit-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+  }
 }
 

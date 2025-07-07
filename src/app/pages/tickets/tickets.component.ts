@@ -38,7 +38,7 @@ export class TicketsComponent implements OnInit {
   loading = false;
   error = '';
   currentUserId = '';
-  editTicketId: string | null = null;
+  editingTicketId: string | null = null;
 
   constructor(private ticketService: TicketService, private fb: FormBuilder, private auth: Auth) {
     this.newTicketForm = this.fb.group({
@@ -74,14 +74,22 @@ export class TicketsComponent implements OnInit {
 
     this.ticketService.updateTicket(id, this.editForm.value)
       .then(() => {
-        this.editTicketId = null;
+        this.editingTicketId = null;
       }).catch(err => {
         this.error = err.message;
       });
   }
 
+  startEdit(ticket: Ticket) {
+    this.editingTicketId = ticket.id!;
+    this.editForm.patchValue({
+      title: ticket.title,
+      description: ticket.description
+    });
+  }
+
   cancelEdit() {
-    this.editTicketId = null;
+    this.editingTicketId = null;
   }
 
   deleteTicket(id: string) {

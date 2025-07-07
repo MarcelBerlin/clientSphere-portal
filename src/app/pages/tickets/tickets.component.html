@@ -25,7 +25,7 @@
         </form>
 
         <!-- Input Form -->
-        <div *ngFor="let t of tickets$ | async" class="ticket-card">
+        <!-- <div *ngFor="let t of tickets$ | async" class="ticket-card">
             <mat-card>
                 <mat-card-title style="margin-bottom: 16px;"><em>{{ t.title || '- no title -' }}</em></mat-card-title>
                 <mat-card-content>
@@ -37,7 +37,7 @@
 
                         <div class="ticket-icons">
                             <mat-icon *ngIf="t.userId === currentUserId" fontIcon="edit" style="cursor: pointer;"
-                                (click)="editTicketId = t.id!">
+                                title="Ticket bearbeiten" (click)="startEdit(t)">
                             </mat-icon>
 
                             <mat-icon *ngIf="t.userId === this.currentUserId" fontIcon="delete" style="cursor: pointer;"
@@ -48,10 +48,10 @@
                     </div>
 
                 </mat-card-content>
-            </mat-card>
+            </mat-card> -->
 
-            <!-- Editing Form -->
-            <div *ngIf="editTicketId === t.id">
+        <!-- Editing Form -->
+        <!-- <div *ngIf="editingTicketId === t.id">
                 <form (ngSubmit)="onUpdate(t.id)" [formGroup]="editForm">
                     <mat-form-field>
                         <mat-label>Title</mat-label>
@@ -66,9 +66,65 @@
                     <button mat-button type="submit">Speichern</button>
                     <button mat-button type="button" (click)="cancelEdit()">Abbrechen</button>
                 </form>
-            </div>
+            </div> -->
 
+        <!-- </div> -->
+
+        <div *ngFor="let t of tickets$ | async" class="ticket-card">
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>
+                        {{ t.title || '- no title -' }}
+                    </mat-card-title>
+                    <mat-card-subtitle>
+                        {{ t.createdAt.toDate() | date: 'dd/MM/yyyy HH:mm' }}
+                        <br />
+                        {{ t.userEmail }}
+                    </mat-card-subtitle>
+                </mat-card-header>
+
+                <mat-card-content *ngIf="editingTicketId !== t.id">
+                    <p>{{ t.description }}</p>
+                    <p><strong>Status:</strong> {{ t.status || '-' }}</p>
+                </mat-card-content>
+
+                <!-- 🔧 Edit-Modus -->
+                <mat-card-content *ngIf="editingTicketId === t.id">
+                    <form [formGroup]="editForm" (ngSubmit)="onUpdate(t.id!)">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Title</mat-label>
+                            <input matInput formControlName="title" />
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Description</mat-label>
+                            <textarea matInput formControlName="description"></textarea>
+                        </mat-form-field>
+
+                        <div class="edit-actions">
+                            <button mat-flat-button color="primary" type="submit">Speichern</button>
+                            <button mat-button type="button" (click)="cancelEdit()">Abbrechen</button>
+                        </div>
+                    </form>
+                </mat-card-content>
+
+                <!-- 🔒 Nur Eigentümer -->
+                <mat-card-actions *ngIf="t.userId === currentUserId && editingTicketId !== t.id">
+                    <button mat-icon-button color="primary" (click)="startEdit(t)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" (click)="deleteTicket(t.id!)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </mat-card-actions>
+            </mat-card>
         </div>
+
+
+
+
+
+
     </mat-card>
 
 </div>
