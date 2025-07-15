@@ -7,68 +7,27 @@
     </header>
 
     <mat-card>
-        <h2>Support Tickets</h2>
-        <form (ngSubmit)="onCreate()" [formGroup]="newTicketForm">
-            <mat-form-field class="w-100">
-                <mat-label>Title</mat-label>
-                <input matInput formControlName="title" required>
-            </mat-form-field>
+        <div class="ticket-form">
+            <h2>Support Tickets</h2>
+            <form (ngSubmit)="onCreate()" [formGroup]="newTicketForm">
+                <mat-form-field class="w-100">
+                    <mat-label>Title</mat-label>
+                    <input matInput formControlName="title" required>
+                </mat-form-field>
 
-            <mat-form-field class="w-100">
-                <mat-label>Description</mat-label>
-                <textarea matInput formControlName="description" required></textarea>
-            </mat-form-field>
+                <mat-form-field class="w-100">
+                    <mat-label>Description</mat-label>
+                    <textarea matInput formControlName="description" required></textarea>
+                </mat-form-field>
 
-            <button mat-raised-button color="primary" type="submit" [disabled]="newTicketForm.invalid || loading">Create
-                Ticket</button>
-            <div *ngIf="error" class="error">{{ error }}</div>
-        </form>
+                <button mat-raised-button color="primary" type="submit"
+                    [disabled]="newTicketForm.invalid || loading">Create
+                    Ticket</button>
+                <div *ngIf="error" class="error">{{ error }}</div>
+            </form>
+        </div>
 
-        <!-- Input Form -->
-        <!-- <div *ngFor="let t of tickets$ | async" class="ticket-card">
-            <mat-card>
-                <mat-card-title style="margin-bottom: 16px;"><em>{{ t.title || '- no title -' }}</em></mat-card-title>
-                <mat-card-content>
-                    <span><strong>Erstellt von: </strong>{{ t.userEmail || '- unbekannt -' }}</span>
-                    <span style="margin-left: 16px;">{{ t.createdAt.toDate()| date: 'dd/MM/yyyy HH:mm'}}</span>
-                    <p>{{ t.description }}</p>
-                    <div class="status-del">
-                        <p><strong>Status:</strong> {{ t.status || '- no status -' }}</p>
 
-                        <div class="ticket-icons">
-                            <mat-icon *ngIf="t.userId === currentUserId" fontIcon="edit" style="cursor: pointer;"
-                                title="Ticket bearbeiten" (click)="startEdit(t)">
-                            </mat-icon>
-
-                            <mat-icon *ngIf="t.userId === this.currentUserId" fontIcon="delete" style="cursor: pointer;"
-                                title="Ticket löschen" (click)="deleteTicket(t.id!)">
-                            </mat-icon>
-                        </div>
-
-                    </div>
-
-                </mat-card-content>
-            </mat-card> -->
-
-        <!-- Editing Form -->
-        <!-- <div *ngIf="editingTicketId === t.id">
-                <form (ngSubmit)="onUpdate(t.id)" [formGroup]="editForm">
-                    <mat-form-field>
-                        <mat-label>Title</mat-label>
-                        <input matInput formControlName="title">
-                    </mat-form-field>
-
-                    <mat-form-field>
-                        <mat-label>Description</mat-label>
-                        <textarea matInput formControlName="description"></textarea>
-                    </mat-form-field>
-
-                    <button mat-button type="submit">Speichern</button>
-                    <button mat-button type="button" (click)="cancelEdit()">Abbrechen</button>
-                </form>
-            </div> -->
-
-        <!-- </div> -->
 
         <div *ngFor="let t of tickets$ | async" class="ticket-card">
             <mat-card>

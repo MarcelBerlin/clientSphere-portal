@@ -9,6 +9,8 @@ import { Observable } from "rxjs";
 })
 export class AuthService {
 
+  unknownUser: boolean = false;
+
   constructor(private auth: Auth) { }
 
   login(email: string, password: string) {
@@ -16,7 +18,7 @@ export class AuthService {
   }
 
   guestLogin() {
-    return signInAnonymously(this.auth);
+    return this.unknownUser = true, signInAnonymously(this.auth);
   }
 
   register(email: string, password: string) {
@@ -24,7 +26,7 @@ export class AuthService {
   }
 
   logout() {
-    return signOut(this.auth);
+    return  this.unknownUser = false, signOut(this.auth);
   }
 
   getUser(): Observable<User | null> {

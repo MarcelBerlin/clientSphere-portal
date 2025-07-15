@@ -1,4 +1,5 @@
 .profile-container {
+    min-height: 100vh;
     padding: 16px;
     h1{
         margin-bottom: 24px;
@@ -9,6 +10,7 @@
 
 header {
     background-color: rgba(0,0,0,0.2);
+    border-radius: 10px;
     box-shadow: 5px -5px 5px rgba(0,0,0,0.4);
     margin: 0;
     display: flex;
@@ -17,12 +19,14 @@ header {
     
     img {
         padding: 0.5rem;
+        border-radius: 15px;
     }
 }
 
 mat-card {
-    max-width: 400px;
+    // max-width: 400px;
     margin: 24px auto;
+    padding: 12px;
 
 }
 
@@ -39,6 +43,7 @@ mat-card {
     color: red;
     margin-top: 8px;
 }
+
 
 ::ng-deep .mat-snack-bar-container.success {
   background: #16a34a;  // Grün

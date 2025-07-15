@@ -1,3 +1,4 @@
+
 mat-card img {
     width: 300px;
     height: 300px;
@@ -6,6 +7,9 @@ mat-card img {
 
 .mat-mdc-card {
     align-items: center;
+    background-color: lightgrey;
+    margin-bottom: 3rem;
+    box-shadow: none;
 }
 
 .inputContainer {
@@ -15,20 +19,6 @@ mat-card img {
     margin-bottom: 2rem;
 }
 
-
-header {
-    background-color: rgba(0,0,0,0.2);
-    box-shadow: 5px -5px 5px rgba(0,0,0,0.4);
-    margin: 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    
-    img {
-        padding: 0.5rem;
-        
-    }
-}
 
 .input-section {
     display: flex;
@@ -41,5 +31,3 @@ header {
     flex-direction: column;
     gap: 16px;
 }
-
-

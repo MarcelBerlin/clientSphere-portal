@@ -16,7 +16,7 @@
                 <input matInput formControlName="displayName" required>
             </mat-form-field>
 
-            
+
 
 
 
@@ -28,23 +28,32 @@
         </form>
     </mat-card>
 
-    <mat-expansion-panel>
-        <mat-expansion-panel-header>
-            <mat-panel-title>Private Daten</mat-panel-title>
-        </mat-expansion-panel-header>
+    <div *ngIf="guestProfile">
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>Private Daten</mat-panel-title>
+            </mat-expansion-panel-header>
 
-        <form [formGroup]="editPrivate" (ngSubmit)="savePrivate()">
-            <mat-form-field class="w-100">
-                <mat-label>Adresse</mat-label>
-                <textarea matInput formControlName="address"></textarea>
-            </mat-form-field>
 
-            <mat-form-field>
-                <mat-label>Telefon</mat-label>
-                <input matInput formControlName="phone">
-            </mat-form-field>
+            <form [formGroup]="editPrivate" (ngSubmit)="savePrivate()">
+                <mat-form-field class="w-100">
+                    <mat-label>Adresse</mat-label>
+                    <textarea matInput formControlName="address"></textarea>
+                </mat-form-field>
 
-            <button mat-raised-button color="primary" type="submit">Speichern</button>
-        </form>
-    </mat-expansion-panel>
+                <mat-form-field>
+                    <mat-label>Telefon</mat-label>
+                    <input matInput formControlName="phone">
+                </mat-form-field>
+
+                <button mat-raised-button color="primary" type="submit">Speichern</button>
+            </form>
+
+            <div *ngFor="let u of users$ | async">
+                <p>Anschrift: {{ u.address }}</p>
+                <p>Tel.: {{ u.phone }}</p>
+            </div>
+
+        </mat-expansion-panel>
+    </div>
 </div>

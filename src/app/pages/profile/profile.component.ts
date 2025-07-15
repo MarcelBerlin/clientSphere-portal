@@ -11,6 +11,7 @@ import { UserService } from '../../services/user.service';
 import { Auth } from '@angular/fire/auth';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { Observable, Observer } from 'rxjs';
 
 export interface UserProfile {
   address?: string;
@@ -34,22 +35,24 @@ export interface UserProfile {
   styleUrl: './profile.component.scss'
 })
 export class ProfileComponent implements OnInit {
-
+  
+  users$!: Observable<any>;
   profileForm: any;
   editPrivate: any;
   loading = false;
   uid!: string;
   error = '';
   success = '';
+  guestProfile: boolean = false;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private auth: Auth ,private userService: UserService, private router: Router, private snack: MatSnackBar) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private auth: Auth, private userService: UserService, private router: Router, private snack: MatSnackBar) {
     this.profileForm = this.fb.group({
       displayName: ['', Validators.required]
-    }); 
+    });
     this.editPrivate = this.fb.group({
       address: [''],
       phone: ['']
-    })    
+    })
   }
 
   ngOnInit(): void {
@@ -58,6 +61,8 @@ export class ProfileComponent implements OnInit {
       this.profileForm.patchValue({ displayName: user?.displayName || '' });
     });
     this.uid = this.auth.currentUser?.uid ?? '';
+    this.users$ = this.userService.getFurtherUserInfo();
+    this.disabledOnGuestLogin();
   }
 
   async onSave() {
@@ -75,19 +80,27 @@ export class ProfileComponent implements OnInit {
     this.loading = false;
   }
 
-startPrivateEdit() {
-  this.userService.getProfile(this.uid).then(snap => {
-    const data = snap.data() as UserProfile | undefined;
-    this.editPrivate.patchValue({
-      address: data?.address || '',
-      phone: data?.phone || ''
+  startPrivateEdit() {
+    this.userService.getProfile(this.uid).then(snap => {
+      const data = snap.data() as UserProfile | undefined;
+      this.editPrivate.patchValue({
+        address: data?.address || '',
+        phone: data?.phone || ''
+      });
     });
-  });
-}
+  }
 
-savePrivate() {
-  this.userService.updateProfile(this.uid, this.editPrivate.value)
-    .then(() => this.snack.open('Gespeichert!', 'Ok', {duration: 2000}));
-}
+  savePrivate() {
+    this.userService.updateProfile(this.uid, this.editPrivate.value)
+      .then(() => this.snack.open('Gespeichert!', 'Ok', { duration: 2000 }));
+  }
+
+  disabledOnGuestLogin() {
+    if (this.authService.unknownUser !== true) {
+      this.guestProfile = true;
+    } else {
+      return;
+    }
+  }
 
 }
