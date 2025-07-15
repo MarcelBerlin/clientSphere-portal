@@ -32,7 +32,7 @@
                     <mat-card-subtitle>
                         {{ t.createdAt.toDate() | date: 'dd/MM/yyyy HH:mm' }}
                         <br />
-                        {{ t.userEmail }}
+                        {{ t.userEmail || '- Anonym -' }}
                     </mat-card-subtitle>
                 </mat-card-header>
 
