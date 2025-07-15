@@ -1,27 +1,28 @@
 <div class="ticket-container">
-   
-    <h2>Meine Tickets</h2>
+
+    <h2>Neues Ticket</h2>
     <mat-card>
-        <div class="ticket-form">            
+        <div class="ticket-form">
             <form (ngSubmit)="onCreate()" [formGroup]="newTicketForm">
                 <mat-form-field class="w-100">
-                    <mat-label>Title</mat-label>
+                    <mat-label>Titel</mat-label>
                     <input matInput formControlName="title" required>
                 </mat-form-field>
 
                 <mat-form-field class="w-100">
-                    <mat-label>Description</mat-label>
+                    <mat-label>Beschreibung</mat-label>
                     <textarea matInput formControlName="description" required></textarea>
                 </mat-form-field>
 
                 <button mat-raised-button color="primary" type="submit"
-                    [disabled]="newTicketForm.invalid || loading">Create
-                    Ticket</button>
+                    [disabled]="newTicketForm.invalid || loading">Ticket erstellen</button>
                 <div *ngIf="error" class="error">{{ error }}</div>
             </form>
         </div>
+    </mat-card>
 
-
+    <h2>Offene Tickets</h2>
+    <mat-card>       
 
         <div *ngFor="let t of tickets$ | async" class="ticket-card">
             <mat-card>
