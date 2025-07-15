@@ -1,0 +1,19 @@
+<header>
+    <img src="ClientSphere_top.png" style="width: 100px; height: 100px;" alt="ClientSphere Logo">
+
+    <div class="header-container">
+        <div>
+            <ng-container *ngIf="user$ | async as user">
+                <h1>Willkommen, {{ user.displayName ? user.displayName : (user.isAnonymous ? 'Gast' : user.email) ||
+                    'User'
+                    }} !
+                </h1>
+            </ng-container>
+
+        </div>
+        <div>
+            <button mat-button color="primary" (click)="logoutUser()">Abmelden</button>
+        </div>
+    </div>
+
+</header>

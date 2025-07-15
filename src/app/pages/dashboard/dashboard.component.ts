@@ -6,6 +6,8 @@ import { Router, RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { User } from 'firebase/auth';
+import { FooterComponent } from '../footer/footer.component';
+import { TicketService } from '../../services/ticket.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,22 +15,24 @@ import { User } from 'firebase/auth';
     CommonModule,
     MatCardModule,
     MatButtonModule,
-    RouterModule
+    RouterModule,
+   
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent {
+  tickets$!: Observable<any>;
 
   user$: Observable<User | null>;
 
-  constructor(private auth: AuthService, private router: Router) {
+  constructor(private auth: AuthService, private ticketService: TicketService, private router: Router) {
     this.user$ = this.auth.getUser();
   }
 
-
-  logoutUser() {
-    return this.auth.logout(), this.router.navigate(['/login']), console.log('logout erfolgreich');
+ngOnInit(): void {
+    this.tickets$ = this.ticketService.getTickets();
   }
+
 
 }

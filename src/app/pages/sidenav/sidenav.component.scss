@@ -1,0 +1,19 @@
+.sidenav-container {
+    display: flex !important;
+    flex-direction: column;
+    width: 200px;
+}
+.card-grid {
+    display: flex;
+    // grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    flex-direction: column;
+    gap: 16px;
+    margin-left: 1rem;
+    margin-top: 0.5rem;
+}
+
+.card {
+    text-align: center;
+}
+
+

@@ -1,14 +1,8 @@
 <div class="profile-container">
 
-    <header>
-        <img src="ClientSphere_top.png" style="width: 100px; height: 100px;" alt="ClientSphere Logo">
-        <div>
-            <h2>Mein Profil</h2>
-        </div>
-    </header>
-
-    <mat-card>
-        <h2>Nutzer Informationen</h2>
+    <h2>Profil Informationen</h2>
+    
+    <mat-card>        
         <form (ngSubmit)="onSave()" [formGroup]="profileForm">
 
             <mat-form-field appearance="outline" class="w-100">

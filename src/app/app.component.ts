@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterModule, RouterOutlet } from '@angular/router';
 import { FooterComponent } from "./pages/footer/footer.component";
+import { SidenavComponent } from "./pages/sidenav/sidenav.component";
+import { HeaderComponent } from './pages/header/header.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, FooterComponent],
+  imports: [RouterModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

@@ -1,14 +1,8 @@
 <div class="ticket-container">
-    <header>
-        <img src="ClientSphere_top.png" style="width: 100px; height: 100px;" alt="ClientSphere Logo">
-        <div>
-            <h2>Meine Tickets</h2>
-        </div>
-    </header>
-
+   
+    <h2>Meine Tickets</h2>
     <mat-card>
-        <div class="ticket-form">
-            <h2>Support Tickets</h2>
+        <div class="ticket-form">            
             <form (ngSubmit)="onCreate()" [formGroup]="newTicketForm">
                 <mat-form-field class="w-100">
                     <mat-label>Title</mat-label>
