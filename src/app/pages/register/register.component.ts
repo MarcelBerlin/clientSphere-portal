@@ -7,6 +7,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { UserService } from '../../services/user.service';
+import { Auth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-register',
@@ -27,7 +29,7 @@ export class RegisterComponent {
   loading = false;
   registerForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private auth: AuthService, private router: Router) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private auth: Auth ,private userService: UserService, private router: Router) {
     this.registerForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -53,7 +55,8 @@ export class RegisterComponent {
       return;
     }
     try {
-      await this.auth.register(email!, password!);
+      await this.authService.register(email!, password!);
+      this.userService.createProfileIfMissing(this.auth.currentUser!.uid, email);
       this.router.navigate(['/dashboard']);
     } catch (e: any) {
       switch (e.code) {

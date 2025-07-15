@@ -35,4 +35,9 @@ export class AuthService {
     const user = this.auth.currentUser;
     return user ? updateProfile(user, { displayName: name }) : Promise.reject('No user logged in');
   }
+
+  
+
+ 
 }
+ 

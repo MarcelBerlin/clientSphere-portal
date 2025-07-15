@@ -7,6 +7,15 @@ import { MatInputModule } from '@angular/material/input';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { MatCardModule } from '@angular/material/card';
+import { UserService } from '../../services/user.service';
+import { Auth } from '@angular/fire/auth';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatExpansionModule } from '@angular/material/expansion';
+
+export interface UserProfile {
+  address?: string;
+  phone?: string
+}
 
 @Component({
   selector: 'app-profile',
@@ -17,6 +26,8 @@ import { MatCardModule } from '@angular/material/card';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    MatSnackBarModule,
+    MatExpansionModule,
     RouterModule
   ],
   templateUrl: './profile.component.html',
@@ -25,21 +36,28 @@ import { MatCardModule } from '@angular/material/card';
 export class ProfileComponent implements OnInit {
 
   profileForm: any;
+  editPrivate: any;
   loading = false;
+  uid!: string;
   error = '';
   success = '';
 
-  constructor(private fb: FormBuilder, private auth: AuthService, private router: Router) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private auth: Auth ,private userService: UserService, private router: Router, private snack: MatSnackBar) {
     this.profileForm = this.fb.group({
       displayName: ['', Validators.required]
-    });
+    }); 
+    this.editPrivate = this.fb.group({
+      address: [''],
+      phone: ['']
+    })    
   }
 
   ngOnInit(): void {
     //aktuelles Profil vorbelegen
-    this.auth.getUser().subscribe(user => {
+    this.authService.getUser().subscribe(user => {
       this.profileForm.patchValue({ displayName: user?.displayName || '' });
     });
+    this.uid = this.auth.currentUser?.uid ?? '';
   }
 
   async onSave() {
@@ -48,7 +66,7 @@ export class ProfileComponent implements OnInit {
     this.loading = true;
     try {
       const { displayName } = this.profileForm.value;
-      await this.auth.updateDisplayName(displayName);
+      await this.authService.updateDisplayName(displayName);
       this.success = 'Profil erfolgreich aktualisiert!';
       this.router.navigate(['/dashboard']);
     } catch (e: any) {
@@ -57,6 +75,19 @@ export class ProfileComponent implements OnInit {
     this.loading = false;
   }
 
+startPrivateEdit() {
+  this.userService.getProfile(this.uid).then(snap => {
+    const data = snap.data() as UserProfile | undefined;
+    this.editPrivate.patchValue({
+      address: data?.address || '',
+      phone: data?.phone || ''
+    });
+  });
+}
 
+savePrivate() {
+  this.userService.updateProfile(this.uid, this.editPrivate.value)
+    .then(() => this.snack.open('Gespeichert!', 'Ok', {duration: 2000}));
+}
 
 }

@@ -10,10 +10,15 @@
     <mat-card>
         <h2>Nutzer Informationen</h2>
         <form (ngSubmit)="onSave()" [formGroup]="profileForm">
+
             <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Display Name</mat-label>
                 <input matInput formControlName="displayName" required>
             </mat-form-field>
+
+            
+
+
 
             <button mat-raised-button color="primary" type="submit"
                 [disabled]="profileForm.invalid || loading">Save</button>
@@ -22,4 +27,24 @@
             <div *ngIf="error" class="error">{{ error }}</div>
         </form>
     </mat-card>
+
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>Private Daten</mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <form [formGroup]="editPrivate" (ngSubmit)="savePrivate()">
+            <mat-form-field class="w-100">
+                <mat-label>Adresse</mat-label>
+                <textarea matInput formControlName="address"></textarea>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Telefon</mat-label>
+                <input matInput formControlName="phone">
+            </mat-form-field>
+
+            <button mat-raised-button color="primary" type="submit">Speichern</button>
+        </form>
+    </mat-expansion-panel>
 </div>

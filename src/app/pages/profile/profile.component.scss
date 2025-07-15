@@ -20,8 +20,6 @@ header {
     }
 }
 
-
-
 mat-card {
     max-width: 400px;
     margin: 24px auto;
@@ -40,4 +38,9 @@ mat-card {
 .error {
     color: red;
     margin-top: 8px;
+}
+
+::ng-deep .mat-snack-bar-container.success {
+  background: #16a34a;  // Grün
+  color: #fff;
 }

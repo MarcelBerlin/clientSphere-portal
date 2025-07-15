@@ -14,6 +14,8 @@ import { environment } from "../environments/environment";
 import { ReactiveFormsModule } from "@angular/forms";
 import { provideFirestore } from "@angular/fire/firestore";
 import { getFirestore } from "firebase/firestore";
+import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
+import { MatExpansionModule } from '@angular/material/expansion'
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -29,6 +31,9 @@ export const appConfig: ApplicationConfig = {
     MatFormFieldModule,
     MatListModule,
     MatIconModule,
+    MatSnackBarModule,
+    MatSnackBar,
+    MatExpansionModule,
     ReactiveFormsModule
   ]
 };
