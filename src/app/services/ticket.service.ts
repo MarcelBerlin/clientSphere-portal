@@ -1,6 +1,6 @@
 import { formatDate } from '@angular/common';
-import { Injectable } from '@angular/core';
-import { Firestore, collectionData, collection, addDoc, doc, updateDoc, deleteDoc, DocumentData } from '@angular/fire/firestore';
+import { inject, Injectable } from '@angular/core';
+import { Firestore, collectionData, collection, addDoc, doc, updateDoc, deleteDoc, DocumentData, serverTimestamp, UpdateData } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Timestamp } from '@angular/fire/firestore';
 import { Auth } from '@angular/fire/auth';
@@ -15,6 +15,10 @@ export interface Ticket {
   userEmail: string;
   status: 'open' | 'closed';
   createdAt: Timestamp;
+  closedAt: Timestamp;
+  closedBy: string;         
+  supportMessage?: string;  
+  closeMessage?: string | null;
 }
 
 @Injectable({
@@ -53,6 +57,17 @@ export class TicketService {
   updateTicket(id: string, updates: Partial<Ticket>) {
     const docRef = doc(this.firestore, `tickets/${id}`);
     return updateDoc(docRef, updates as DocumentData);
+  }
+
+  closeTicket(ticketId: string, msg: string | null) {
+    const user = inject(Auth).currentUser;
+    const update: UpdateData<Ticket> = {
+      status: 'closed',
+      closedAt: serverTimestamp(),
+      closedBy: user?.uid ?? 'system',
+      supportMessage: msg ?? ''
+    };
+    return updateDoc(doc(this.firestore, 'tickets', ticketId), update);
   }
 
   // Ticket löschen
