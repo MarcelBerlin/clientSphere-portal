@@ -3,30 +3,15 @@
 }
 
 mat-card img {
-    width: 300px;
-    height: 300px;
     margin-top: 2rem;
 }
 
 .mat-mdc-card {
     align-items: center;
-    background-color: lightgrey;
+    background-color: #fff;
     margin-bottom: 3rem;
     box-shadow: none;
 }
-
-// header {
-//     background-color: rgba(0,0,0,0.2);
-//     box-shadow: 5px -5px 5px rgba(0,0,0,0.4);
-//     margin: 0;
-//     display: flex;
-//     align-items: center;
-//     justify-content: space-evenly;
-    
-//     img {
-//         padding: 0.5rem;
-//     }
-// }
 
 .inputContainer {
     display: flex;

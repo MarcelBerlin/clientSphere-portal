@@ -1,12 +1,13 @@
 header {
-    background-color: rgba(0,0,0,0.2);
+    background-color: rgba(0, 0, 0, 0.1);
     border-radius: 10px;
-    box-shadow: 5px -5px 5px rgba(0,0,0,0.4);
-    margin: 0.5rem 1rem;   
+    box-shadow: 5px -5px 5px rgba(0, 0, 0, 0.4);
+    margin: 0.5rem 1rem;
     display: flex;
     align-items: center;
     gap: 35px;
-    
+    max-height: 150px;
+
     img {
         padding: 0.5rem;
         border-radius: 15px;
