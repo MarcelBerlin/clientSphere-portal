@@ -1,8 +1,8 @@
 <div class="dashboard-container">
- 
+
     <h2>Offene Tickets</h2>
 
-    <div *ngFor="let t of tickets$ | async" class="ticket-card">
+    <div *ngFor="let t of openTickets$ | async" class="ticket-card">
         <mat-card style="margin-top: 12px;">
             <mat-card-header>
                 <mat-card-title>
@@ -18,10 +18,42 @@
             <mat-card-content>
                 <p>{{ t.description }}</p>
                 <p><strong>Status:</strong> {{ t.status || '-' }}</p>
+                <p><strong>Area:</strong> {{ t.area || '-' }}</p>
             </mat-card-content>
-
 
         </mat-card>
     </div>
+
+    <div style="margin-top: 1.5rem;">
+        <mat-expansion-panel style="background-color: rgba(0, 0, 0, 0.05);">
+            <mat-expansion-panel-header>
+                <mat-panel-title>Geschlossene Tickets</mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div *ngFor="let t of closedTickets$ | async" class="ticket-card">
+
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-title>
+                            {{ t.title || '- no title -' }}
+                        </mat-card-title>
+                        <mat-card-subtitle>
+                            {{ t.createdAt.toDate() | date: 'dd/MM/yyyy HH:mm' }}
+                            <br />
+                            {{ t.userEmail || '- Anonym -' }}
+                        </mat-card-subtitle>
+                    </mat-card-header>
+
+                    <mat-card-content>
+                        <p>{{ t.description }}</p>
+                        <p><strong>Status:</strong> {{ t.status || '-' }}</p>
+                        <p><strong>Area:</strong> {{ t.area || '-' }}</p>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+
+        </mat-expansion-panel>
+    </div>
+
 
 </div>

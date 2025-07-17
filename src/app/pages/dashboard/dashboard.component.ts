@@ -3,11 +3,11 @@ import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { Router, RouterModule } from '@angular/router';
-import { Observable } from 'rxjs';
+import { map, Observable, Observer } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
-import { User } from 'firebase/auth';
 import { FooterComponent } from '../footer/footer.component';
-import { TicketService } from '../../services/ticket.service';
+import { Ticket, TicketService } from '../../services/ticket.service';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,23 +15,26 @@ import { TicketService } from '../../services/ticket.service';
     CommonModule,
     MatCardModule,
     MatButtonModule,
+    MatExpansionModule,
     RouterModule,
-   
+
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent {
-  tickets$!: Observable<any>;
+  tickets$!: Observable<Ticket[]>;
+  openTickets$!: Observable<any>;
+  closedTickets$!: Observable<any>;
 
-  user$: Observable<User | null>;
+  constructor(private ticketService: TicketService, private router: Router) {
 
-  constructor(private auth: AuthService, private ticketService: TicketService, private router: Router) {
-    this.user$ = this.auth.getUser();
   }
 
-ngOnInit(): void {
+  ngOnInit(): void {
     this.tickets$ = this.ticketService.getTickets();
+    this.openTickets$ = this.tickets$.pipe(map(tickets => tickets.filter(t => t.status === 'open')));
+    this.closedTickets$ = this.tickets$.pipe(map(tickets => tickets.filter(t => t.status === 'closed')));
   }
 
 

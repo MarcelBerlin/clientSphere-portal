@@ -9,6 +9,7 @@ import { FormBuilder } from '@angular/forms';
 
 export interface Ticket {
   id?: string;
+  area: string;
   title: string;
   description: string;
   userId: string;

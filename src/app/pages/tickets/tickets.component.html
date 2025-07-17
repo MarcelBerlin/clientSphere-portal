@@ -4,6 +4,25 @@
     <mat-card>
         <div class="ticket-form">
             <form (ngSubmit)="onCreate()" [formGroup]="newTicketForm">
+
+                <!-- Kategorie für das Ticket -->
+
+                <mat-form-field>
+                    <mat-label>Bereich auswählen</mat-label>
+                    <mat-select formControlName="area">
+                        <mat-option value="IT">IT</mat-option>
+                        <mat-option value="Marketing">Marketing</mat-option>
+                        <mat-option value="QS">QS</mat-option>
+                        <mat-option value="Vertrieb">Vetrieb</mat-option>
+                        <mat-option value="Management">Management</mat-option>
+                        <mat-option value="Produktion">Produktion</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <!-- 
+                #######################################
+                -->
+
                 <mat-form-field class="w-100">
                     <mat-label>Titel</mat-label>
                     <input matInput formControlName="title" required>
@@ -23,8 +42,7 @@
 
     <h2>Offene Tickets</h2>
 
-
-    <div *ngFor="let t of tickets$ | async" class="ticket-card">
+    <div *ngFor="let t of openTickets$ | async" class="ticket-card">
 
         <mat-card>
             <mat-card-header>
@@ -41,6 +59,7 @@
             <mat-card-content *ngIf="editingTicketId !== t.id">
                 <p>{{ t.description }}</p>
                 <p><strong>Status:</strong> {{ t.status || '-' }}</p>
+                <P><strong>Area:</strong> {{ t.area || '-' }}</P>
             </mat-card-content>
 
 
@@ -78,7 +97,7 @@
                     <button mat-stroked-button color="primary" (click)="openCloseDialog(t)">Ticket
                         schließen</button>
                 </div>
-                <mat-chip color="accent" selected *ngIf="t.status === 'closed'">
+                <mat-chip selected color="accent" *ngIf="t.status === 'closed'">
                     Geschlossen
                 </mat-chip>
             </mat-card-actions>
@@ -86,5 +105,37 @@
         </mat-card>
 
     </div>
+
+    <div style="margin-top: 1.5rem;">
+        <mat-expansion-panel style="background-color: rgba(0, 0, 0, 0.05);">
+            <mat-expansion-panel-header>
+                <mat-panel-title>Geschlossene Tickets</mat-panel-title>
+            </mat-expansion-panel-header>
+            <div *ngFor="let t of closedTickets$ | async" class="ticket-card">
+
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-title>
+                            {{ t.title || '- no title -' }}
+                        </mat-card-title>
+                        <mat-card-subtitle>
+                            {{ t.createdAt.toDate() | date: 'dd/MM/yyyy HH:mm' }}
+                            <br />
+                            {{ t.userEmail || '- Anonym -' }}
+                        </mat-card-subtitle>
+                    </mat-card-header>
+
+                    <mat-card-content>
+                        <p>{{ t.description }}</p>
+                        <p><strong>Status:</strong> {{ t.status || '-' }}</p>
+                        <p><strong>Area:</strong> {{ t.area || '-' }}</p>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+
+        </mat-expansion-panel>
+    </div>
+
+
 
 </div>
