@@ -1,26 +1,46 @@
 <div class="profile-container">
 
     <h2>Profil Informationen</h2>
-    
-    <mat-card>        
-        <form (ngSubmit)="onSave()" [formGroup]="profileForm">
 
-            <mat-form-field appearance="outline" class="w-100">
-                <mat-label>Display Name</mat-label>
-                <input matInput formControlName="displayName" required>
-            </mat-form-field>
+    <div class="userInfo-container">
+        <mat-card>
+            <form (ngSubmit)="onSave()" [formGroup]="profileForm">
+
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Display Name</mat-label>
+                    <input matInput formControlName="displayName" required>
+                </mat-form-field>
+
+                <button mat-raised-button color="primary" type="submit"
+                    [disabled]="profileForm.invalid || loading">Save</button>
+
+                <div *ngIf="success" class="success">{{ success }}</div>
+                <div *ngIf="error" class="error">{{ error }}</div>
+            </form>
+        </mat-card>
 
 
+        <div *ngFor="let u of users$ | async">
 
 
+            <mat-card>
+                <p>Email: {{ this.currentUser$!.email || ' Anonym ' }}</p>
+                <div *ngIf="u.address.length > 0">
+                    <p>Adresse: {{ u.address }}</p>
+                </div>
+                <div *ngIf="u.phone.length > 0">
+                    <p>Telefon: {{ u.phone }}</p>
+                </div>
 
-            <button mat-raised-button color="primary" type="submit"
-                [disabled]="profileForm.invalid || loading">Save</button>
+            </mat-card>
 
-            <div *ngIf="success" class="success">{{ success }}</div>
-            <div *ngIf="error" class="error">{{ error }}</div>
-        </form>
-    </mat-card>
+
+        </div>
+
+
+    </div>
+
+
 
     <div *ngIf="guestProfile">
         <mat-expansion-panel>
@@ -38,15 +58,10 @@
                 <mat-form-field>
                     <mat-label>Telefon</mat-label>
                     <input matInput formControlName="phone">
-                </mat-form-field>
+                </mat-form-field><br>
 
                 <button mat-raised-button color="primary" type="submit">Speichern</button>
             </form>
-
-            <div *ngFor="let u of users$ | async">
-                <p>Anschrift: {{ u.address }}</p>
-                <p>Tel.: {{ u.phone }}</p>
-            </div>
 
         </mat-expansion-panel>
     </div>

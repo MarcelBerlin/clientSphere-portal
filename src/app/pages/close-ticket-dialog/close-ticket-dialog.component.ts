@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { TicketService } from '../../services/ticket.service';
 
 @Component({
   selector: 'app-close-ticket-dialog',
@@ -25,13 +26,12 @@ form = new FormGroup({
   });
 
 
-constructor(public dialogRef: MatDialogRef<CloseTicketDialogComponent>) {}
+constructor(public dialogRef: MatDialogRef<CloseTicketDialogComponent>, private ticketService: TicketService) {}
 
 
 // Optional
 save() {
   if (this.form.invalid) return;
-
   this.dialogRef.close(this.form.value.message || null);
 }
 

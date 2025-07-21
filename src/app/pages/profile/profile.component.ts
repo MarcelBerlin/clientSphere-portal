@@ -35,7 +35,7 @@ export interface UserProfile {
   styleUrl: './profile.component.scss'
 })
 export class ProfileComponent implements OnInit {
-  
+
   users$!: Observable<any>;
   profileForm: any;
   editPrivate: any;
@@ -44,15 +44,25 @@ export class ProfileComponent implements OnInit {
   error = '';
   success = '';
   guestProfile: boolean = false;
+  currentUser$;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private auth: Auth, private userService: UserService, private router: Router, private snack: MatSnackBar) {
+
+  constructor (
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private auth: Auth,
+    private userService: UserService,
+    private router: Router,
+    private snack: MatSnackBar
+  ) {
     this.profileForm = this.fb.group({
       displayName: ['', Validators.required]
     });
     this.editPrivate = this.fb.group({
       address: [''],
       phone: ['']
-    })
+    });
+    this.currentUser$ = this.auth.currentUser;
   }
 
   ngOnInit(): void {
@@ -63,6 +73,7 @@ export class ProfileComponent implements OnInit {
     this.uid = this.auth.currentUser?.uid ?? '';
     this.users$ = this.userService.getFurtherUserInfo();
     this.disabledOnGuestLogin();
+        
   }
 
   async onSave() {
