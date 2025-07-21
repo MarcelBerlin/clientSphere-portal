@@ -104,6 +104,7 @@ export class ProfileComponent implements OnInit {
   savePrivate() {
     this.userService.updateProfile(this.uid, this.editPrivate.value)
       .then(() => this.snack.open('Gespeichert!', 'Ok', { duration: 2000 }));
+      this.editPrivate.reset();
   }
 
   disabledOnGuestLogin() {
